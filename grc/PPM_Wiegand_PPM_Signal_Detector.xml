@@ -1,0 +1,26 @@
+<block>
+  <name>Ppm signal detector</name>
+  <key>PPM_Wiegand_PPM_Signal_Detector</key>
+  <category>PPM_WIEGAND</category>
+  <import>import PPM_Wiegand</import>
+  <make>PPM_Wiegand.PPM_Signal_Detector($samp_rate, $energy_threshold)</make>
+  <param>
+    <name>Samp_rate</name>
+    <key>samp_rate</key>
+    <type>float</type>
+  </param>
+  <param>
+    <name>Energy_threshold</name>
+    <key>energy_threshold</key>
+    <type>float</type>
+  </param>
+  <sink>
+    <name>in</name>
+    <type>float</type>
+    <nports>2</nports>
+  </sink>
+  <source>
+    <name>out</name>
+    <type>float</type>
+  </source>
+</block>
