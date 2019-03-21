@@ -120,6 +120,20 @@ namespace gr {
 			parity_check_high = parity(high, 17);
 			parity_check_low = parity(low, 17);
 			break;
+		case 29:
+			temp = code[1] >> 1;
+			facility = temp & 0x000000ff;
+			id = code[1] >> 9;
+			id &= 0x7ffff; 
+			// no parity
+			break;
+		case 31:
+			temp = code[1] >> 25;
+			facility = temp & 0x0000000f; // 4 bits
+			id = code[1] >> 1; // remove low bit
+			id &= 0xffffff; 
+			// no parity
+			break;
 		case 33:
 			temp = code[1] >> 1; // remove low parity
 			id = temp & 0x00FFFFFF; // 24 bits for 33
@@ -133,6 +147,12 @@ namespace gr {
 			low = code[1] & mask;
 			parity_check_high = parity(high, 17);
 			parity_check_low = parity(low, 17);
+			break;
+		case 34:
+			facility = code[1] >> 18;
+			facility &= 0xffff;
+			id = code[1] >> 1;
+			id &= 0xffff;
 			break;
 		case 36:
 			temp = code[1] >> 1; // remove low parity
