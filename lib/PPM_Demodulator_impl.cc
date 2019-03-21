@@ -104,6 +104,8 @@ namespace gr {
               unsigned char high_parity, low_parity; 
               unsigned int high;
               unsigned int low;
+	      int parity_check_high = 0;
+	      int parity_check_low = 0;
 	      switch(d_nbr_peak_detected) {
 		case 26:
 			temp = code[1] >> 1; // remove low parity
@@ -115,6 +117,8 @@ namespace gr {
 		        low_parity = (code[1]) & 1;
 		        high = code[1] >> 12 & mask; // top 13 bits;
         		low = code[1] & mask;
+			parity_check_high = parity(high, 17);
+			parity_check_low = parity(low, 17);
 			break;
 		case 33:
 			temp = code[1] >> 1; // remove low parity
@@ -127,10 +131,16 @@ namespace gr {
 			low_parity = (code[1]) & 1;
 			high = code[1] >> 16; & mask; // top 17 bits;
 			low = code[1] & mask;
+			parity_check_high = parity(high, 17);
+			parity_check_low = parity(low, 17);
+			break;
+		case 36:
+			temp = code[1] >> 1; // remove low parity
+			id = temp & 0x00FFFFFF; // 24 bits for 33
+			facility = (unsigned int) code[0] & 0xff;
+			// no parity according to docs
 			break;
 	      }
-		int parity_check_high = parity(high, 17);
-		int parity_check_low = parity(low, 17);
 		if(parity_check_high == high_parity && parity_check_low == low_parity) {
 			parity_check = 1;
 		         printf("\n[%d]: Code: %#lx Facility: %d CardId: %u %s\n", d_nbr_peak_detected, code[1], facility, id, parity_check == 0 ? "(parity failure)" : "(parity success)");
