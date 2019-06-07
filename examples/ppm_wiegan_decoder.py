@@ -3,7 +3,7 @@
 ##################################################
 # GNU Radio Python Flow Graph
 # Title: Ppm Wiegan Decoder
-# Generated: Wed Mar 20 19:45:41 2019
+# Generated: Fri Jun  7 14:49:27 2019
 ##################################################
 
 
@@ -93,8 +93,7 @@ class ppm_wiegan_decoder(grc_wxgui.top_block_gui):
         self.rtlsdr_source_0.set_antenna('', 0)
         self.rtlsdr_source_0.set_bandwidth(100000, 0)
 
-        self.blocks_multiply_const_vxx_0 = blocks.multiply_const_vff((-1, ))
-        self.blocks_add_const_vxx_0 = blocks.add_const_vff((-1.02, ))
+        self.blocks_add_const_vxx_0 = blocks.add_const_vff((0.7, ))
         self.analog_am_demod_cf_0 = analog.am_demod_cf(
         	channel_rate=samp_rate,
         	audio_decim=1,
@@ -111,11 +110,10 @@ class ppm_wiegan_decoder(grc_wxgui.top_block_gui):
         ##################################################
         self.connect((self.PPM_Wiegand_PPM_Peak_Detector_0, 0), (self.PPM_Wiegand_PPM_Demodulator_0, 0))
         self.connect((self.analog_agc2_xx_0, 0), (self.blocks_add_const_vxx_0, 0))
-        self.connect((self.analog_am_demod_cf_0, 0), (self.blocks_multiply_const_vxx_0, 0))
+        self.connect((self.analog_am_demod_cf_0, 0), (self.analog_agc2_xx_0, 0))
         self.connect((self.blocks_add_const_vxx_0, 0), (self.PPM_Wiegand_PPM_Peak_Detector_0, 0))
         self.connect((self.blocks_add_const_vxx_0, 0), (self.wxgui_fftsink2_0, 0))
         self.connect((self.blocks_add_const_vxx_0, 0), (self.wxgui_scopesink2_0, 0))
-        self.connect((self.blocks_multiply_const_vxx_0, 0), (self.analog_agc2_xx_0, 0))
         self.connect((self.rtlsdr_source_0, 0), (self.analog_am_demod_cf_0, 0))
 
     def get_samp_rate(self):
