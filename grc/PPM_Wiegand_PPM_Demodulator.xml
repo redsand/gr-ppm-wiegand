@@ -3,11 +3,17 @@
   <key>PPM_Wiegand_PPM_Demodulator</key>
   <category>PPM_WIEGAND</category>
   <import>import PPM_Wiegand</import>
-  <make>PPM_Wiegand.PPM_Demodulator($samp_rate)</make>
+  <make>PPM_Wiegand.PPM_Demodulator($samp_rate, $pulse_width)</make>
   <param>
     <name>Sample Rate</name>
     <key>samp_rate</key>
     <value>samp_rate</value>
+    <type>float</type>
+  </param>
+  <param>
+    <name>Pulse Width</name>
+    <key>pulse_width</key>
+    <value>pulse_width</value>
     <type>float</type>
   </param>
   <sink>

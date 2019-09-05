@@ -21,7 +21,7 @@ namespace gr {
       float d_nbr_samples_command_zero;
 
      public:
-      PPM_Demodulator_impl(float samp_rate);
+      PPM_Demodulator_impl(float samp_rate, float pulse_width);
       ~PPM_Demodulator_impl();
       int parity(unsigned long ino, int iter);
       int getBitOffset (unsigned v);

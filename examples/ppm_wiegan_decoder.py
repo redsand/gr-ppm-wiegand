@@ -3,7 +3,7 @@
 ##################################################
 # GNU Radio Python Flow Graph
 # Title: Ppm Wiegan Decoder
-# Generated: Fri Jun  7 14:49:27 2019
+# Generated: Thu Sep  5 15:16:10 2019
 ##################################################
 
 
@@ -46,6 +46,7 @@ class ppm_wiegan_decoder(grc_wxgui.top_block_gui):
         # Variables
         ##################################################
         self.samp_rate = samp_rate = 1000000
+        self.pulse_width = pulse_width = 12.0
 
         ##################################################
         # Blocks
@@ -103,7 +104,7 @@ class ppm_wiegan_decoder(grc_wxgui.top_block_gui):
         self.analog_agc2_xx_0 = analog.agc2_ff(1e-1, 1e-2, 1.0, 100.0)
         self.analog_agc2_xx_0.set_max_gain(65536)
         self.PPM_Wiegand_PPM_Peak_Detector_0 = PPM_Wiegand.PPM_Peak_Detector(0)
-        self.PPM_Wiegand_PPM_Demodulator_0 = PPM_Wiegand.PPM_Demodulator(samp_rate)
+        self.PPM_Wiegand_PPM_Demodulator_0 = PPM_Wiegand.PPM_Demodulator(samp_rate, pulse_width)
 
         ##################################################
         # Connections
@@ -124,6 +125,12 @@ class ppm_wiegan_decoder(grc_wxgui.top_block_gui):
         self.wxgui_scopesink2_0.set_sample_rate(self.samp_rate)
         self.wxgui_fftsink2_0.set_sample_rate(self.samp_rate)
         self.rtlsdr_source_0.set_sample_rate(self.samp_rate)
+
+    def get_pulse_width(self):
+        return self.pulse_width
+
+    def set_pulse_width(self, pulse_width):
+        self.pulse_width = pulse_width
 
 
 def main(top_block_cls=ppm_wiegan_decoder, options=None):

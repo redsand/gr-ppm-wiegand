@@ -21,19 +21,19 @@ FILE *fp=NULL;
 namespace gr {
   namespace PPM_Wiegand {
     PPM_Demodulator::sptr
-    PPM_Demodulator::make(float samp_rate)
+    PPM_Demodulator::make(float samp_rate, float pulse_width)
     {
       return gnuradio::get_initial_sptr
-        (new PPM_Demodulator_impl(samp_rate));
+        (new PPM_Demodulator_impl(samp_rate, pulse_width));
     }
 
-    PPM_Demodulator_impl::PPM_Demodulator_impl(float samp_rate)
+    PPM_Demodulator_impl::PPM_Demodulator_impl(float samp_rate, float pulse_width)
       : gr::block("PPM_Demodulator",
               gr::io_signature::make(1, 1, sizeof(float)),
               gr::io_signature::make(0, 0, sizeof(float)))
     {
       //INIT
-      fp = fopen("/home/redsand/.ids", "a+");
+      fp = fopen(".ids", "a+");
       code[0] = 0;
       code[1] = 0;
       bit_mode = BIT_ZERO; // start with expecting a ZERO, we can recover it otherwise
@@ -42,7 +42,7 @@ namespace gr {
       d_nbr_samples_since_last_peak = 0;
       d_nbr_samples_guard_time = samp_rate * GUARD_TIME;
       printf("Guard time: %.2f samples\n", d_nbr_samples_guard_time);
-      d_nbr_samples_refreshing_display = samp_rate * 1.0 / 12.0 ; 
+      d_nbr_samples_refreshing_display = samp_rate * 1.0 / pulse_width ; 
       d_nbr_samples_command_spread = COMMAND_SPREAD * samp_rate;
       d_nbr_samples_command_zero = COMMAND_ZERO * samp_rate;
 
@@ -260,7 +260,7 @@ namespace gr {
         
       }
 
-	fflush(fp);
+      fflush(fp);
       consume_each (noutput_items);
       return noutput_items;
     }
